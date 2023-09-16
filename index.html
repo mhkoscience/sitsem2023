@@ -1,0 +1,475 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta author="Michal H. Kolář">
+
+	<title>
+        Exploring biomolecular dynamics through large-scale computer simulations
+    </title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.mhk.css" id="theme">
+
+</head>
+	<body>
+        <div class="reveal">
+	        <div class="slides">
+<!--
+============ SLIDES START HERE ============
+-->
+
+
+
+<section>
+    <p>
+        Invited talk at the SITOLA Seminar 2023, Telč, Czechia.
+    </p>
+    <p>
+        Created using <a href="https://revealjs.com" target="_blank">Reveal.js</a>.
+    </p>
+    <p style="margin-top: 2em">
+        Use the right arrow to start browsing the slides.
+    </p>
+</section>
+
+
+<section style="text-align: left">
+    <div style="display: flex; width: 100%; justify-content: space-between; align-items: center">
+        <img src="./media/loga/ufch.png" style="width:35%">
+        <img src="./media/loga/mhko.png" style="width:25%">
+    </div>
+    <h2 style="margin-top:3em">
+        Exploring biomolecular dynamics through large-scale computer simulations
+    </h2>
+    <h4 style="margin-top: 4em; margin-bottom: 1em">Michal H. Kolář</h4>
+</section>
+
+<section data-background-image="./media/juelich.png">
+</section>
+
+<section style="center">
+    <div style="width: 70%; text-align: left; display: block; margin: 3em auto">
+        <h3>1. biomolecules and their dynamics</h3>
+        <h3>2. MD simulations</h3>
+        <h3>3. supercomputers</h3>
+        <h3>4. case study: PDF</h3>
+    </div>
+</section>
+
+
+<section class="center">
+    <a href="https://cdn.rcsb.org/pdb101/molecular-machinery/" target="_blank">https://cdn.rcsb.org/pdb101/molecular-machinery/</a>
+    <img src="./media/pdb-101.png">
+</section>
+
+
+<section>
+    <h3>Biomolecules are biopolymers</h3>
+    <div class="r-stack">
+        <img src="./media/biomolecules/biomolecules-1.png" style="width:80%">
+        <img src="./media/biomolecules/biomolecules-2.png" style="width:80%" class="fragment">
+        <img src="./media/biomolecules/biomolecules-3.png" style="width:80%" class="fragment">
+        <img src="./media/biomolecules/biomolecules-4.png" style="width:80%" class="fragment">
+    </div>
+</section>
+
+
+
+<section style="text-align: left">
+    <div class="leftcol" style="width: 44%">
+        <h4 style="margin-top: 3em">biomolecules are not static</h4>
+    </div>
+    <div class="rightcol" style="width: 54%">
+        <video width="100%" nocontrols autoplay loop>
+            <source data-src="./media/out-rna.mp4" type="video/mp4">
+        </video>
+    </div>
+</section>
+
+
+<section>
+    <img src="./media/gpcr-activation.webp"><br>
+    <a href="" target="_blank" style="font-size: smaller">Activation pathway of a G protein-coupled receptor...</a>
+</section>
+
+
+<section data-background-video="./media/solo-dance.mp4"
+         data-background-size="cover">
+    <div style="color: white; font-size: smaller; width:50%; text-align: left; 
+                position: relative; top: 400px; left: 60%">
+    <p>
+        Martin Jensen &ndash; Solo Dance
+    </p>
+    <p>
+        feat.<br>
+        Dylan Mayoral<br>
+        Haeni Kim<br>
+        brothers Jurečič<br>
+    </p>
+    </div>
+</section>
+
+
+<section>
+    <div class="r-stack">
+        <img src="./media/simulation-box/box-0.png" style="width:70%">
+        <img src="./media/simulation-box/box-2.png" style="width:70%" class="fragment">
+        <img src="./media/simulation-box/box-3.png" style="width:70%" class="fragment">
+        <img src="./media/simulation-box/box-4.png" style="width:70%" class="fragment">
+        <img src="./media/simulation-box/box-5.png" style="width:70%" class="fragment">
+    </div>
+</section>
+
+
+<section class="center">
+    <img src="./media/simulation-scheme.png">
+</section>
+
+
+<section class="center">
+    <img src="./media/simulations/simulations.png">
+</section>
+
+
+<section style="text-align: left">
+    <h3>Input coordinates</h3>
+
+    <div class="fragment">
+        <h3>Force field</h3>
+        <p>
+            V(<b>i</b>) = <span style="color: dodgerblue">V(b)</span> + <span style="color:limegreen">V(nb)</span>
+        </p>
+    </div>
+    <div class="fragment">
+        <h4>Bonded interactions</h4>
+        <p style="color: dodgerblue">
+            V(b) = <span style="color: tomato">V(bonds)</span> + V(angles) + V(torsions)
+        <p style="color: tomato">
+            V(bond) = &frac12; k (d &minus; d<sub>0</sub>)<sup>2</sup>
+        </p>
+        <h4>Non-bonded interactions</h4>
+        <p style="color: limegreen">
+            V(nb) = V(Coulomb) + V(vdw) &prop; r<sup>&minus;1</sup> + (r<sup>&minus;12</sup> &minus; r<sup>&minus;6</sup>)
+        </p>
+        <p>
+        </p>
+    </div>
+</section>
+
+
+<section class="center">
+    <h3>Hands-on PDB and TOP file formats</h3>
+</section>
+
+
+<section data-background-image="./media/files/pdb1.png"
+         data-background-size="contain">
+</section>
+
+
+<section data-background-image="./media/files/pdb2.png"
+         data-background-size="contain">
+</section>
+
+
+<section data-background-image="./media/files/top1.png"
+         data-background-size="contain">
+</section>
+
+
+<section data-background-image="./media/files/top2.png"
+         data-background-size="contain">
+</section>
+
+
+<section data-background-image="./media/files/top3.png"
+         data-background-size="contain">
+</section>
+
+
+<section style="text-align: left">
+    <h3>Final data &ndash; a trajectory</h3>
+    <p>
+        number of atoms &times; number of trajectory frames
+    </p>
+    <p>
+        statistical ensemble of biomolecular conformations
+    </p>
+    <h3 style="margin-top: 2em">typically MBs to TBs of data</h3>
+</section>
+
+
+<section data-background-image="./media/lumi-area.jpg">
+    <p style="margin-top: 19em; background-color: rgba(255,255,255,0.4)">
+        foto: Mikael Kanerva <a href="https://www.lumi-supercomputer.eu/media/#fancybox-custom-gallery-8" target="_blank">link</a>
+    </p>
+</section>
+
+
+<section data-background-image="./media/lumi.jpg">
+    <p style="margin-top: 19em">
+        foto: Fade Creative <a href="https://www.lumi-supercomputer.eu/media/#fancybox-custom-gallery-1" target="_blank">link</a>
+    </p>
+    <!--
+    -->
+</section>
+
+
+<section>
+    <h3>LUMI accelerated nodes</h3>
+    <img src="./media/lumi-node-g.png">
+</section>
+
+
+<section style="text-align: left">
+    <h3>LUMI-G: 2560 nodes</h3>
+    <p>
+        1x AMD EPYC 7763 CPU<br>
+        4x AMD MI250x GPU<br>
+        512 GB RAM
+    </p>
+    <h3 style="margin-top: 1em">LUMI-C: 1536 nodes</h3>
+    <p>
+        2x AMD EPYC 7763 CPU<br>
+        256 &minus; 1024 GB RAM
+    </p>
+
+    <h3 style="margin-top: 1em; color: dodgerblue">3,6 billion CZK</h3>
+</section>
+
+
+<section>
+    <h2>experimental devices</h2>
+    <div class="left3" style="text-align: center">
+        <img src="./media/zkumavky.jpg">
+        <h3 style="margin-top: 1em; color: dodgerblue">10 CZK</h3>
+    </div>
+
+    <div class="middle3" style="text-align: center">
+        <img src="./media/nmr-bruker2.jpg">
+        <h3 style="margin-top: 1em; color: dodgerblue">250 million CZK</h3>
+    </div>
+
+    <div class="right3" style="text-align: center">
+        <img src="./media/cryo-em-lego.jpg">
+        <h3 style="margin-top: 1em; color: dodgerblue">120 million CZK</h3>
+    </div>
+</section>
+
+
+<section>
+    <img src="./media/celebrity.png">
+</section>
+
+
+<section>
+    <div class="leftcol" style="width:40%; text-align: center">
+        <h3>Rommie Amaro</h3>
+        <img src="./media/rommie-amaro.jpg" style="width:70%"><br>
+        foto: <a href="https://amarolab.ucsd.edu/php/members/people.php#rommie-amaro">Amaro lab</a>
+        <p>
+            University of California, San Diego, USA
+        </p>
+    </div>
+    
+    <div class="rightcol" style="width:57%">
+        <video width="100%" nocontrols loop style="margin-top: 4em">
+            <source data-src="./media/virus-chripky.mp4" type="video/mp4">
+        </video>
+    </div>
+</section>
+
+
+<section>
+    <div class="leftcol" style="width:40%; text-align: center">
+        <h3>Thom H. Dunning, Jr.</h3>
+        <img src="./media/thom-dunning.jpg" style="width:70%"><br>
+        foto: <a href="https://ncsa30.ncsa.illinois.edu/2005/01/dunning-becomes-ncsa-director/">NCSA</a>
+        <p>
+            University of Washington, USA
+        </p>
+    </div>
+    
+    <div class="rightcol" style="width:57%;">
+        <blockquote style="text-align: center; border: solid 2px #bbb; margin-top: 3em">
+        H &Psi; = E &Psi;
+        </blockquote>
+        <p style="text-align: center">
+            Schrödinger equation
+        </p>
+        <div style="display: block; margin: 3em auto; width: 50%" >
+        </div>
+    </div>
+</section>
+
+
+<section data-background-video="./media/video-dens.mp4" data-video-autoplay="true">
+</section>
+
+
+<section>
+    <div class="leftcol" style="width:40%; text-align: center">
+        <h3>David E. Shaw.</h3>
+        <img src="./media/david-shaw.jpg" style="width:70%"><br>
+        foto: <a href="https://relaytx.com/our-team/david-e-shaw-ph-d/">Relay Tx</a>
+    </div>
+    
+    <div class="rightcol" style="width:57%;">
+        <p style="margin-top:3em">
+            amarican billionaire, philantropist, scientist
+        </p>
+        <p>
+            founder of <a href="https://www.deshawresearch.com/" target="_blank">D E Shaw Research</a>
+        </p>
+    </div>
+</section>
+
+
+<section data-background-image="./media/desres.jpg">
+</section>
+
+
+<section data-background-image="./media/anton3.jpg">
+</section>
+
+
+<section>
+    <video width="70%" nocontrols loop>
+        <source data-src="./media/drug-binding.mp4" type="video/mp4">
+    </video>
+</section>
+
+
+<section>
+</section>
+
+<section>
+    <img src="./media/team.jpg">
+    <h3>computer simulations of protein synthesis</h3>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 3em; align-items: center">
+        <img src="./media/loga/gacr.png" style="height: 80px; margin-right: 2em">
+        <img src="./media/loga/avh.png" style="height: 80px; margin-right: 2em">
+        <img src="./media/loga/czexpats.png" style="height: 90px">
+    </div>
+</section>
+
+
+<section>
+    <div class="r-stack">
+        <img src="./media/translation-scheme/scheme-0.png" style="width:70%">
+        <img src="./media/translation-scheme/scheme-1.png" style="width:70%" class="fragment">
+    </div>
+</section>
+
+
+<section data-background-video="./media/ribosome-intro.mp4"
+         data-background-video-loop="true"
+         data-background-color="white"
+         data-background-size="contain">
+    &nbsp;
+</section>
+
+<section>
+    <div class="r-stack">
+        <img src="./media/tunnel/tunnel-1.png" style="width:70%">
+        <img src="./media/tunnel/tunnel-2.png" style="width:70%" class="fragment">
+        <img src="./media/tunnel/tunnel-3.png" style="width:70%" class="fragment">
+        <img src="./media/tunnel/tunnel-4.png" style="width:70%" class="fragment">
+        <img src="./media/tunnel/tunnel-5.png" style="width:70%" class="fragment">
+    </div>
+</section>
+
+
+<section>
+    <div class="leftcol" style="padding: 0em 0.5em; width: 45%">
+    <p>
+        McGrath, Černeková, Kolář: Binding of the peptide deformylase on the ribosome surface modulates the exit tunnel interior <br>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/36335428/" target="_blank">PMID: 36335428</a>
+    </p>
+    </div>
+    <div class="rightcol" style="width: 50%">
+        <img src="./media/pdf.png">
+    </div>
+</section>
+
+
+<section style="text-align: left">
+    <h3>Strategy</h3>
+    <p>
+        Run MD simulations of two systems:
+    </p>
+    <ol>
+        <li>with PDF</li>
+        <li>without PDF</li>
+    </ol>
+    <p style="color: tomato">
+        (challenging, time consuming)
+    </p>
+    <p class="fragment">
+        Train a model that predicts presence/absence of PDF.<br>
+        <span style="color: limegreen">(routine, fast)</span>
+    </p>
+    <p class="fragment">
+        Find molecular parts that yield strong predictors.<br>
+        <span style="color: tomato">(challenging, fast)</span>
+    </p>
+</section>
+
+
+<section>
+    <h3>Prediction accuracy</h3>
+    <img src="./media/accuracy/accuracy.png" style="width: 100%">
+</section>
+
+
+<section data-background-image="./media/mcm.png"
+         data-background-size="contain">
+</section>
+
+
+
+
+<section data-background-image="./media/slides-overview.png">
+</section>
+
+<section style="text-align: left">
+    <div style="display: flex; width: 100%; justify-content: space-between; align-items: center">
+        <img src="./media/loga/ufch.png" style="width:35%">
+        <img src="./media/loga/mhko.png" style="width:25%">
+    </div>
+    <h2 style="margin-top:3em">
+        Exploring biomolecular dynamics through large-scale computer simulations
+    </h2>
+    <h4 style="margin-top: 4em; margin-bottom: 1em">Michal H. Kolář</h4>
+    <h4><a href="#">https://mhko.science/contact</a></h4>
+</section>
+
+<!--
+============ SLIDES END HERE ============
+-->
+            </div>
+        </div>
+
+		<script src="dist/reveal.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+                autoPlayMedia: true,
+                controls: false,
+                progress: true, 
+                slideNumber: true,
+                transition: 'none', 
+                backgroundTransition: 'none',
+                center: false,
+			});
+		</script>
+	</body>
+</html>
+        
